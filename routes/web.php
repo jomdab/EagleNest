@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
+use App\Http\Controllers\Join_RoomController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,8 @@ Route::middleware([
     })->name('dashboard');
 });
 
+Route::get('/room/{roomId}', function ($roomId) {
+    return view('user_room',compact('roomId'));
+})->name('room');
+
+Route::get('/join-room', [Join_RoomController::class,'joinRoom']);

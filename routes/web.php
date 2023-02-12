@@ -29,8 +29,23 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/room/{roomId}', function ($roomId) {
-    return view('user_room',compact('roomId'));
-})->name('room');
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/room/{roomId}', function ($roomId) {
+        return view('user_room',compact('roomId'));
+    })->name('room');
+});
 
-Route::get('/join-room', [Join_RoomController::class,'joinRoom']);
+
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/join-room', [Join_RoomController::class,'joinRoom']);
+});
+

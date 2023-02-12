@@ -6,10 +6,14 @@
                     <div class="container mt-5">
                         <div class="row">
                             <div class="col-12">
-                                <form action="/submit-question" method="post">
+                                <form action="/submit-question/{{$roomId}}" method="post">
                                     @csrf
+                                    @error('question')
+                                        <span class="text-danger my-2">{{$message}}</span>
+                                    @enderror
                                     <div class="input-group">
                                     <input type="text" class="form-control" name="question" placeholder="Ask your question here...">
+                                    <input type="hidden" name="roomId" value="{{$roomId}}">
                                     <div class="input-group-append" style="display: flex;">
                                         <button class="btn btn-primary mx-2 " type="submit" style="width: 100%;">
                                             <i class="fas fa-paper-plane"></i>
@@ -20,7 +24,16 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
-            </div>
+    </div>
+
+    <div>
+        @foreach($event as $row)
+            @if($row->room_id == $roomId)
+                <p>{{$row->text}}</p>
+            @endif
+        @endforeach
+    </div>
 
 </x-app-layout>

@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->string('room_id');
-            $table->string('username');
+            $table->integer('user_id');
             $table->string('text');
+            $table->integer('vote');
             $table->timestamps();
             $table->softDeletes();
         });

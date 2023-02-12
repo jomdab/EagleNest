@@ -12,7 +12,7 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg my-5">
             <div class="container mx-auto my-5">
                 <div class="flex justify-center">
-                    <button onclick="location.href='/{{ Auth::user()->name }}/admin'" class="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-5 rounded text-xl btn btn-outline-secondary my-2">
+                    <button onclick="location.href='/{{ Auth::user()->id }}/admin'" class="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-5 rounded text-xl btn btn-outline-secondary my-2">
                         <h3>
                             {{ __('Create Room') }}
                         </h3>

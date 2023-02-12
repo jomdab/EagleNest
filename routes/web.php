@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\Join_RoomController;
+use App\Http\Controllers\Event;
+
 
 /*
 |--------------------------------------------------------------------------

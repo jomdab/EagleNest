@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Http\Request;
+
 
 
 class EventController extends Controller
@@ -37,7 +37,8 @@ class EventController extends Controller
             'vote'=>($event->vote)+1
         ]);
 
-        return redirect()->back()->with('voted',$request->vote);
+
+        return redirect()->back()->with('voted',$request->vote)->with('event',$event);
         
     }
 

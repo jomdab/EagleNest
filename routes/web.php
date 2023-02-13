@@ -7,6 +7,7 @@ use App\Http\Controllers\EventController;
 use App\Models\Event;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,7 +39,9 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/room/{roomId}', function ($roomId) {
-        $event=Event::all();
+        $event = DB::table('events')
+                ->orderBy('vote', 'desc')
+                ->get();
         return view('user_room',compact('roomId','event'));
     })->name('room');
 });
@@ -68,7 +71,9 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/{roomId}/admin', function ($roomId) {
-        $event=Event::all();
+        $event = DB::table('events')
+                ->orderBy('vote', 'desc')
+                ->get();
         return view('admin_room',compact('roomId','event'));
     });
 });

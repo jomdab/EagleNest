@@ -72,3 +72,11 @@ Route::middleware([
         return view('admin_room',compact('roomId','event'));
     });
 });
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::post('/increase_vote', [EventController::class,'increase_vote'] );
+});

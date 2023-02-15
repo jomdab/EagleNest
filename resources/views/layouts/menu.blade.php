@@ -130,7 +130,7 @@
            <!--profile image & text-->
             <!--menu item-->
             <div class="profile">
-                <img src="{{asset('/logo/Logo.png')}}">
+                <img src="{{asset('/logo/logo_short.png')}}">
                 <h3>EagleNest</h3>
                 <p>Q&A support</p>
             </div>

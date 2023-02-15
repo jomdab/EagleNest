@@ -85,3 +85,11 @@ Route::middleware([
 ])->group(function () {
     Route::post('/increase_vote', [EventController::class,'increase_vote'] );
 });
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::post('/delete_question', [EventController::class,'delete'] );
+});

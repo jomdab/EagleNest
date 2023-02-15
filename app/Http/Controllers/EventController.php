@@ -38,7 +38,15 @@ class EventController extends Controller
         ]);
 
 
-        return redirect()->back()->with('voted',$request->vote)->with('event',$event);
+        return redirect()->back()->with('voted',$request->vote);
+        
+    }
+
+    public function delete(Request $request){
+        
+        Event::find($request->id)->forceDelete();
+
+        return redirect()->back();
         
     }
 

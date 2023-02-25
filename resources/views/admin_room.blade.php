@@ -7,6 +7,7 @@
                         <div class="container mt-5 rounded">
                             <div class="row">
                                     <h4>{{ __('Your room id is '.$roomId) }}</h4>
+                                    <h4>{{ __('http://127.0.0.1:8000/room/'.$roomId) }}</h4>
                             </div>
                         </div>
                         
@@ -18,7 +19,7 @@
             @if($row->room_id == $roomId)
             <div class="card rounded mx-4 my-2">
                 <div class="card-body">
-                    <h5 class="card-title">title</h5>
+                    <!-- <h5 class="card-title">title</h5> -->
                     <p class="card-text">{{$row->text}}</p>
                     <p class="card-text">Value voted by users: {{ $row->vote }}</p>
                     @if(empty($voted))

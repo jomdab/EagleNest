@@ -5,6 +5,8 @@ use App\Models\User;
 use App\Http\Controllers\Join_RoomController;
 use App\Http\Controllers\EventController;
 use App\Models\Event;
+use App\Http\Controllers\VoteController;
+use App\Models\Vote;
 
 
 
@@ -46,7 +48,8 @@ Route::middleware([
         $event = DB::table('events')
                 ->orderBy('vote', 'desc')
                 ->get();
-        return view('user_room',compact('roomId','event'));
+        $vote = Vote::all();
+        return view('user_room',compact('roomId','event','vote'));
     })->name('room');
 });
 
@@ -87,7 +90,16 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::post('/increase_vote', [EventController::class,'increase_vote'] );
+    Route::post('/increase_vote', [VoteController::class,'increase_vote'] );
+});
+
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::post('/delete_vote', [VoteController::class,'delete_vote'] );
 });
 
 Route::middleware([

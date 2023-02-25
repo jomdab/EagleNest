@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 
 
+
 class EventController extends Controller
 {
     public function index($roomId){
@@ -29,18 +30,6 @@ class EventController extends Controller
         return redirect()->back();
     }
 
-    public function increase_vote(Request $request){
-        
-        $event = Event::find($request->id);
-
-        Event::find($request->id)->update([
-            'vote'=>($event->vote)+1
-        ]);
-
-
-        return redirect()->back()->with('voted',$request->vote);
-        
-    }
 
     public function delete(Request $request){
         

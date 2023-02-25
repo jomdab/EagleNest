@@ -32,18 +32,28 @@
             @if($row->room_id == $roomId)
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">title</h5>
+                    <!-- <h5 class="card-title">title</h5> -->
                     <p class="card-text">{{$row->text}}</p>
                     <p class="card-text">Value voted by users: {{ $row->vote }}</p>
-                    @if(empty($voted))
-                    <form method="POST" action="/increase_vote">
-                        @csrf
-                        <input type="hidden" name="voted" value="true">
-                        <input type="hidden" name="id" value= "{{$row->id}}">
-                        <button type="submit" class="btn btn-primary">Vote</button>
-                    </form>
-                    @else
-                        <p>You have already voted!</p>
+                    @php($already_voted = 'false')
+                    @foreach($vote as $v)
+                        @if($v->user_id == Auth::user()->id && $v->question_id ==$row->id)
+                            <form method="POST" action="/delete_vote">
+                                @csrf
+                                <input type="hidden" name="id" value= "{{$row->id}}">
+                                <input type="hidden" name="vote_id" value= "{{$v->id}}">
+                                <button type="submit" class="btn btn-primary">Vote</button>
+                            </form>
+                            <p>You have already voted!</p>
+                            @php($already_voted = 'true')
+                        @endif
+                    @endforeach
+                    @if($already_voted == 'false')
+                        <form method="POST" action="/increase_vote">
+                            @csrf
+                            <input type="hidden" name="id" value= "{{$row->id}}">
+                            <button type="submit" class="btn btn-secondary">Vote</button>
+                        </form>
                     @endif
                 </div>
             </div>

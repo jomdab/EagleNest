@@ -25,6 +25,10 @@ class EventController extends Controller
         $event->user_id = Auth::user()->id;
         $event->text = $request->question;
         $event->vote = 1;
+        if($request->anonymous === null)
+            $event->anonymous = 0;
+        else
+            $event->anonymous = $request->anonymous;
         $event->save();
 
         return redirect()->back();

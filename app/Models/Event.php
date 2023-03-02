@@ -16,5 +16,6 @@ class Event extends Model
         'user_id',
         'text',
         'vote',
+        'anonymous'
     ];
 }

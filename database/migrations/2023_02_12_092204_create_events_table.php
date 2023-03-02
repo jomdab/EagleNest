@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('text');
             $table->integer('vote');
+            $table->boolean('anonymous')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

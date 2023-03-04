@@ -1,45 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link href='https://unpkg.com/css.gg@2.0.0/icons/css/log-out.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eagle Nest | Sign in</title>
+    <style>
+        @import url(href='https://fonts.googleapis.com/css?family=Inria Sans');
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+        *{
+            list-style: none;
+            text-decoration: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inria Sans', sans-serif;
+        }
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <!-- Create Room button -->
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg my-5">
-            <div class="container mx-auto my-5">
-                <div class="flex justify-center">
-                    <button onclick="location.href='/{{ Auth::user()->id }}/admin'" class="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-5 rounded text-xl btn btn-outline-secondary my-2">
-                        <h3>
-                            {{ __('Create Room') }}
-                        </h3>
-                    </button>
+        body {
+            font-family: 'Inria Sans';
+            background-color: #AD9B9B;
+        }
+        .rectangle {
+            width: 1019px;
+            height: 600px;
+            background-color: #b6b6b6;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 8px; /* Set the border radius to 50% to make the edges circular */
+            display: flex;
+            align-items:center;
+            justify-content: center;
+        }
+        .sidebar{
+            background: white;
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 395px;
+            height: 100%;
+            padding: 20px 0;
+            transition: all 0.5s ease;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+        
+        .sidebar .profile{
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .sidebar .profile img{
+            background-color: #d9d9d9;
+            display: block;
+            width: 286px;
+            height: 119px;
+            margin-top: 30px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: auto;
+        }
+
+        .sidebar .profile h3{
+            color: black;
+            margin: 10px 0 5px;
+            font-size: 20px;
+        }
+
+        .sidebar .profile p{
+            color: black;
+            font-size: 20px;
+        }
+        .sidebar ul li a{
+            margin-left: 20px;
+            display: block;
+            padding: 10px 30px;
+            color: gray;
+            font-size: 24px;
+            position: relative;
+        }
+
+        .sidebar ul li a .icon{
+            color: black;
+            width: 30px;
+            display: inline-block;
+        }
+        .sidebar ul li div{
+            color: white;
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+        .sidebar ul li a:hover,
+        .sidebar ul li a.active{
+            color: black;
+
+            background-color: #d9d9d9;
+            border-right: 2px solid rgb(5, 68, 104);
+        }
+
+        .sidebar ul li a:hover .icon,
+        .sidebar ul li a.active .icon{
+            background-color: #d9d9d9;
+            color: black;
+        }
+
+        .sidebar ul li a:hover:before,
+        .sidebar ul li a.active:before{
+            display: block;
+        }
+
+        body.active .sidebar{
+            left: -225px;
+        }
+        .content{
+            background: #b6b6b6;
+            width: 624px;
+            height: 100%;
+            position: relative;
+            transition: all 0.5s ease;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            flex-direction:column;
+        }
+        .form-group{
+            position: relative;
+            transition: all 0.5s ease;
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            flex-direction:column;
+        }
+        .form-control{
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .create{
+            justify-content: center;
+            text-align: center;
+            width: 280px;
+            height:50px;
+            border-radius: 20px;
+            font-size: 15px;
+            background-color: #d9d9d9;
+            margin-bottom: 10px;
+        }
+        .join{
+            justify-content: center;
+            text-align: center;
+            width: 280px;
+            height:50px;
+            border-radius: 20px;
+            font-size: 15px;
+            background-color: #d9d9d9;
+        }
+        .content .fa-user-circle {
+            font-size: 75px;
+        }
+        .gg-log-out{
+            margin-left:5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="rectangle">
+        <div class="sidebar">
+            <!--profile image & text-->
+                <!--menu item-->
+                <div class="profile">
+                    <img src="{{asset('/logo/logo_long.png')}}">
                 </div>
+
+                <ul>
+                    <li>
+                        <a href="{{ route('profile.show') }}">
+                            <span class="icon"><i class="fa fa-user-circle"></i></span>
+                            <span class="item">Profile</span>
+                        </a>
+                        <div></div>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon"><i class="fa fa-bars"></i></span>
+                            <span class="item">Feature</span>
+                        </a>
+                        <div></div>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon"><i class="fa fa-users"></i></span>
+                            <span class="item">About us</span>
+                        </a>
+                        <div></div>
+                    </li>
+                    <li>
+                        <a href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <span class="icon"><i class="gg-log-out"></i></span>
+                            <span class="item">Log out</span>
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        <div></div>
+                    </li>
+                </ul>
+        </div>
+        <div class="content">
+            <div class="profile">
+                <i class="fa fa-user-circle"></i>
             </div>
-            </div>
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-            <!-- Join Room button -->
-            <div class="container mx-auto my-5">
-                <div class="flex justify-center">
-                <form action="{{ url('/join-room') }}" method="GET">
-                    @csrf
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="roomId" name="roomId" placeholder="Enter Room ID" required>
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-5 rounded text-xl btn btn-outline-secondary my-2">
+            <button class="create" onclick="location.href='/{{ Auth::user()->id }}/admin'">
+                <h3>
+                    {{ __('CREATE ROOM') }}
+                </h3>
+            </button>
+            <form action="{{ url('/join-room') }}" method="GET">
+                @csrf
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="roomId" name="roomId" placeholder="Enter Room ID" required>
+                        <button class = "join" type="submit">
                             <h3>
-                                {{ __('Join Room') }}
+                                {{ __('JOIN ROOM') }}
                             </h3>
-                            </button>
-                        </div>
-                </form>
-                </div>
-            </div>
-            </div>
+                        </button>
+                    </div>
+            </form>
         </div>
     </div>
-</x-app-layout>
+</body>
 

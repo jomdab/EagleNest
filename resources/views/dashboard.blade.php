@@ -152,8 +152,23 @@
             height:50px;
             border-radius: 20px;
             font-size: 15px;
+            color: grey;
             background-color: #d9d9d9;
             margin-bottom: 10px;
+            border:none;
+        }
+        .create:hover,
+        .create.activate{
+            justify-content: center;
+            text-align: center;
+            width: 280px;
+            height:50px;
+            border-radius: 20px;
+            font-size: 15px;
+            background-color: #cdd9e3;
+            color: black;
+            margin-bottom: 10px;
+            border: 2px solid black;
         }
         .join{
             justify-content: center;
@@ -162,7 +177,23 @@
             height:50px;
             border-radius: 20px;
             font-size: 15px;
+            color: grey;
             background-color: #d9d9d9;
+            margin-bottom: 10px;
+            border:none;
+        }
+        .join:hover,
+        .join.activate{
+            justify-content: center;
+            text-align: center;
+            width: 280px;
+            height:50px;
+            border-radius: 20px;
+            font-size: 15px;
+            background-color: #cdd9e3;
+            color: black;
+            margin-bottom: 10px;
+            border: 2px solid black;
         }
         .content .fa-user-circle {
             font-size: 75px;

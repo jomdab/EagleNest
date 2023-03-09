@@ -138,12 +138,14 @@
             flex-direction:column;
         }
         .form-control{
+            width: 280px;
             box-sizing: border-box;
             border: 2px solid #ccc;
             border-radius: 8px;
             font-size: 16px;
             padding: 10px;
             margin-bottom: 10px;
+            text-align: center;
         }
         .create{
             justify-content: center;
@@ -200,6 +202,9 @@
         }
         .gg-log-out{
             margin-left:5px;
+        }
+        .fa-user-circle{
+            margin-bottom: 10px;
         }
     </style>
 </head>

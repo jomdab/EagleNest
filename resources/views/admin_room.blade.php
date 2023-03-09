@@ -114,7 +114,22 @@
             <div class="profile">
                 <img src="{{asset('/logo/logo_long.png')}}">
                 <div>
-                    <h4>{{ __('Your room id is '.$roomId) }}</h4>
+                @if($sort == "vote")
+                                    <form action="/{{$roomId}}/admin">
+                                        <select class="form-control" name = "sort" onchange="this.form.submit();">
+                                            <option selected value="vote">sort with vote</option>
+                                            <option value="time">sort with time</option>
+                                        </select>
+                                    </form>
+                                @else
+                                <form action="/{{$roomId}}/admin">
+                                        <select class="form-control" name = "sort" onchange="this.form.submit();">
+                                            <option value="vote">sort with vote</option>
+                                            <option selected value="time">sort with time</option>
+                                        </select>
+                                    </form>
+                                @endif
+                                <h4>{{ __('Your room id is '.$roomId) }}</h4>
                 </div>
             </div>
         </div>

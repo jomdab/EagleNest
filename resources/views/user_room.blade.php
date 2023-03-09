@@ -34,13 +34,12 @@
     <div>
         @foreach($event as $row)
             @if($row->room_id == $roomId)
-            <div class="card">
+            <div class="card rounded mx-4 my-2">
                 <div class="card-body">
-                    <!-- <h5 class="card-title">title</h5> -->
                     @if($row->anonymous == 1)
                       <p class="card-text"> {{Auth::user()->name}} </p>
                     @else
-                    <p class="card-text"> Anonymous </p>
+                      <p class="card-text"> Anonymous </p>
                     @endif
                     <p class="card-text">{{$row->text}}</p>
                     <p class="card-text">Value voted by users: {{ $row->vote }}</p>

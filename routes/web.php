@@ -7,6 +7,7 @@ use App\Http\Controllers\EventController;
 use App\Models\Event;
 use App\Http\Controllers\VoteController;
 use App\Models\Vote;
+use Illuminate\Http\Request; 
 
 
 
@@ -77,11 +78,19 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/{roomId}/admin', function ($roomId) {
-        $event = DB::table('events')
-                ->orderBy('vote', 'desc')
-                ->get();
-        return view('admin_room',compact('roomId','event'));
+    Route::get('/{roomId}/admin', function ($roomId,Request $request) {
+        if($request->sort == 'vote'){
+            $event = DB::table('events')
+                    ->orderBy('vote', 'desc')
+                    ->get();
+        }
+        else{
+            $event = DB::table('events')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+        }
+        $sort=$request->sort;
+        return view('admin_room',compact('roomId','event','sort'));
     });
 });
 
@@ -109,3 +118,4 @@ Route::middleware([
 ])->group(function () {
     Route::post('/delete_question', [EventController::class,'delete'] );
 });
+

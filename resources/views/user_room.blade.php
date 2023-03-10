@@ -281,9 +281,6 @@
         <div class="sidebar">
             <div class="profile">
                 <img src="{{asset('/logo/logo_long.png')}}">
-                <div>
-                    <h4>{{ __('Your room id is '.$roomId) }}</h4>
-                </div>
             </div>
             <div>
                 @if($sort == "vote")
@@ -301,6 +298,7 @@
                     </select>
                 </form>
                 @endif
+                <h4>{{ __('Your room id is '.$roomId) }}</h4>
             </div>
             <div class="leavebtn">
                 <a href="{{ url('/dashboard') }}" style="text-decoration:none; color:inherit;">

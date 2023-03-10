@@ -269,6 +269,7 @@
                 @csrf
                     <div class="form-group">
                         <input type="text" class="form-control" id="roomId" name="roomId" placeholder="Enter Room ID" required>
+                        <input type="hidden" id="sort" name="sort" value="vote">
                         <button class = "join" type="submit">
                             <h3>
                                 {{ __('JOIN ROOM') }}

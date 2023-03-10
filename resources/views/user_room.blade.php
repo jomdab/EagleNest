@@ -5,6 +5,21 @@
     <div class="container mt-5 ">
       <div class="row">
         <div class="col-12">
+          @if($sort == "vote")
+            <form action="/room/{{$roomId}}">
+              <select class="form-control" name = "sort" onchange="this.form.submit();">
+                  <option selected value="vote">sort with vote</option>
+                  <option value="time">sort with time</option>
+              </select>
+          </form>
+          @else
+            <form action="/room/{{$roomId}}">
+                <select class="form-control" name = "sort" onchange="this.form.submit();">
+                    <option value="vote">sort with vote</option>
+                    <option selected value="time">sort with time</option>
+                </select>
+            </form>
+          @endif
           <form action="/submit-question/{{$roomId}}" method="post">
             @csrf
             @error('question')

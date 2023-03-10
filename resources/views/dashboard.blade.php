@@ -256,15 +256,11 @@
             <div class="profile">
                 <i class="fa fa-user-circle"></i>
             </div>
-            <form action="/{{ Auth::user()->id }}/admin" method="GET">
-                @csrf
-                    <input type="hidden" name="sort" value="vote">
-                    <button class="create" type="submit">
-                        <h3>
-                            {{ __('CREATE ROOM') }}
-                        </h3>
-                    </button>
-            </form>
+            <button class="create" onclick="location.href='/{{ Auth::user()->id }}/admin'">
+                <h3>
+                    {{ __('CREATE ROOM') }}
+                </h3>
+            </button>
             <form action="{{ url('/join-room') }}" method="GET">
                 @csrf
                     <div class="form-group">

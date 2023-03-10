@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eagle Nest | Home</title>
     <style>
-        @import url(href='https://fonts.googleapis.com/css?family=Inria Sans');
+        @import url('https://fonts.googleapis.com/css?family=Inria+Sans');
 
         *{
             list-style: none;
@@ -36,6 +36,18 @@
             border-radius: 8px; /* Set the border radius to 50% to make the edges circular */
             display: flex;
         }
+        .leavebtn {
+            background-color: #ad9b9b;
+            border-radius: 9px;
+            border: none;
+            color: black;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+            width:150px;
+            height: 30px;
+        }
 
         .sidebar{
             background: white;
@@ -48,6 +60,7 @@
             transition: all 0.5s ease;
             border-top-left-radius: 8px;
             border-bottom-left-radius: 8px;
+            text-align:center;
         }
 
         .sidebar .profile{
@@ -65,30 +78,67 @@
             margin-right: auto  ;
             margin-bottom: auto;
         }
+        p{
+            line-height: 1.2; /* adjust as needed */
+            margin: 0;
+            padding: 0;
+            border: none;
+            font-size:24px;
+        }
+        .vote{
+            font-weight:bold;
+        }
         .bubble {
             position: relative;
             background-color: #ebdcdc;
             border-radius: 10px;
             border-bottom-left-radius:0px;
             padding: 10px;
+            min-width: 186px;
             max-width: 300px;
+            max-height: 170px;
             margin: 20px;
         }
-
+        .bubble:nth-child(-n+3){
+            background-color:#efd3d3;
+        }
+        .bubble:nth-child(-n+3):after{
+            border-color:#efd3d3 transparent;
+        }
+        
         .bubble:after {
             content: '';
             position: absolute;
             bottom: -10px;
             left: 5.5%;
             margin-left: -10px;
-            border-width: 20px 20px 0 0;
+            border-width: 15px 15px 0 0;
             border-style: solid;
             border-color: #ebdcdc transparent;
             display: block;
             width: 0;
         }
+        /* WebKit browsers */
+        .text::-webkit-scrollbar {
+            width: 0; /* hide scrollbar width */
+        }
+        .name{
+            margin-left:10px;
+            font-size:15px;
+            color:grey;
+        }
+        .text{
+            height:50px;
+            margin-top:10px;
+            margin-left:10px;
+            margin-bottom:10px;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            overflow-y:scroll;
+        }
         .question{
             background-color:white;
+            width:1200px;
             height:550px;
             margin-top:50px;
             margin-left:50px;
@@ -115,22 +165,27 @@
                 <img src="{{asset('/logo/logo_long.png')}}">
                 <div>
                 @if($sort == "vote")
-                                    <form action="/{{$roomId}}/admin">
-                                        <select class="form-control" name = "sort" onchange="this.form.submit();">
-                                            <option selected value="vote">sort with vote</option>
-                                            <option value="time">sort with time</option>
-                                        </select>
-                                    </form>
-                                @else
-                                <form action="/{{$roomId}}/admin">
-                                        <select class="form-control" name = "sort" onchange="this.form.submit();">
-                                            <option value="vote">sort with vote</option>
-                                            <option selected value="time">sort with time</option>
-                                        </select>
-                                    </form>
-                                @endif
-                                <h4>{{ __('Your room id is '.$roomId) }}</h4>
+                    <form action="/{{$roomId}}/admin">
+                        <select class="form-control" name = "sort" onchange="this.form.submit();">
+                            <option selected value="vote">sort with vote</option>
+                            <option value="time">sort with time</option>
+                        </select>
+                    </form>
+                @else
+                <form action="/{{$roomId}}/admin">
+                        <select class="form-control" name = "sort" onchange="this.form.submit();">
+                            <option value="vote">sort with vote</option>
+                            <option selected value="time">sort with time</option>
+                        </select>
+                    </form>
+                @endif
+                    <h4>{{ __('Your room id is '.$roomId) }}</h4>
                 </div>
+            </div>
+            <div class="leavebtn">
+                <a href="{{ url('/dashboard') }}" style="text-decoration:none; color:inherit;">
+                    <span>LEAVE ROOM</span>
+                </a>
             </div>
         </div>
         
@@ -141,8 +196,13 @@
 
                         <div class="bubble">
                             <!-- <h5 class="card-title">title</h5> -->
-                            <p class="card-text">{{$row->text}}</p>
-                            <p class="card-text">Value voted by users: {{ $row->vote }}</p>
+                            <p class="vote">{{ $row->vote }} VOTE</p>
+                            @if($row->anonymous == 0)
+                                <p class="name"> {{Auth::user()->name}} </p>
+                            @else
+                                <p class="name"> Anonymous </p>
+                            @endif
+                                <p class="text">{{$row->text}}</p>
                             @if(empty($voted))
                             <form method="POST" action="/delete_question">
                                 @csrf

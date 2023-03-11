@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Http\Controllers\VoteController;
 use App\Models\Vote;
 use Illuminate\Http\Request; 
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
 
@@ -90,6 +91,7 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/{roomId}/admin', function ($roomId,Request $request) {
+        $qrCode = QrCode::size(100)->generate('http://localhost:8000/room/'.$roomId);
         if($request->sort == 'vote'){
             $event = DB::table('events')
                     ->orderBy('vote', 'desc')
@@ -101,7 +103,7 @@ Route::middleware([
                     ->get();
         }
         $sort=$request->sort;
-        return view('admin_room',compact('roomId','event','sort'));
+        return view('admin_room',compact('roomId','event','sort','qrCode'));
     });
 });
 

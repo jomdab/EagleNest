@@ -4,6 +4,7 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-NWswiZMYlxyx/p5ue5sg8O67W1BucM5RbRjKLvUGYft2rCq0eULkxxZpAMvE0fTFWV7qsdT+T83VzvD9nSmtfw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="{{asset('js/scrolldown.js')}}"></script>
     <script src="{{asset('js/unvote.js')}}"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
@@ -296,6 +297,9 @@
             margin-top:0px;
             margin-bottom:0px;
         }
+        .fa-crown{
+            margin-bottom:10px;
+        }
     }
     </style>
 </head>
@@ -337,7 +341,18 @@
                 @if($row->room_id == $roomId)
                 <div class="bubble">
                     <div class="bubble-content">
-                        <p class="vote">{{ $row->vote }} VOTE</p>
+                        <div style="display:flex;align-items:center;">
+                            <p class="vote">{{ $row->vote }} VOTE</p>
+                            @if($loop->iteration ==1)
+                            <i class="fa fa-crown" style="margin-left:10px;font-size:20px;color:#FFB743;text-shadow: 0 0 2px #000;"></i>
+                            @endif
+                            @if($loop->iteration ==2)
+                            <i class="fa fa-crown" style="margin-left:10px;font-size:20px;color:#C0C0C0;text-shadow: 0 0 3px #000;"></i>
+                            @endif
+                            @if($loop->iteration ==3)
+                            <i class="fa fa-crown" style="margin-left:10px;font-size:20px;color:#B87333;text-shadow: 0 0 3px #000;"></i>
+                            @endif
+                        </div>
                         @if($row->anonymous == 0)
                         <p class="name"> {{Auth::user()->name}} </p>
                         @else

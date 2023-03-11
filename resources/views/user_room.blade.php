@@ -273,6 +273,30 @@
     .fa-paper-plane {
         color: #ad9b9b;
     }
+    @media screen and (max-width: 600px) {
+        .rectangle{
+            width:100vw;
+        }
+        .sidebar {
+            display: none;
+        }
+        .question{
+            width: 100vw;
+        }
+        .bubble{
+            min-width:90vw;
+            max-height:180px;
+            margin-bottom:10px;
+        }
+        .bubble-content p{
+            margin-top:0px; 
+            margin-bottom:10px;
+        }
+        .bubble-content .votebtn{
+            margin-top:0px;
+            margin-bottom:0px;
+        }
+    }
     </style>
 </head>
 
@@ -312,33 +336,35 @@
                 @foreach($event as $row)
                 @if($row->room_id == $roomId)
                 <div class="bubble">
-                    <p class="vote">{{ $row->vote }} VOTE</p>
-                    @if($row->anonymous == 0)
-                    <p class="name"> {{Auth::user()->name}} </p>
-                    @else
-                    <p class="name"> Anonymous </p>
-                    @endif
-                    <p class="text">{{$row->text}}</p>
-
-                    @php($already_voted = 'false')
-                    @foreach($vote as $v)
-                    @if($v->user_id == Auth::user()->id && $v->question_id ==$row->id)
-                    <form method="POST" action="/delete_vote">
-                        @csrf
-                        <input type="hidden" name="id" value="{{$row->id}}">
-                        <input type="hidden" name="vote_id" value="{{$v->id}}">
-                        <button type="submit" class="btn btn-primary">Unvote</button>
-                    </form>
-                    @php($already_voted = 'true')
-                    @endif
-                    @endforeach
-                    @if($already_voted == 'false')
-                    <form method="POST" action="/increase_vote">
-                        @csrf
-                        <input type="hidden" name="id" value="{{$row->id}}">
-                        <button type="submit" class="btn btn-secondary">Vote</button>
-                    </form>
-                    @endif
+                    <div class="bubble-content">
+                        <p class="vote">{{ $row->vote }} VOTE</p>
+                        @if($row->anonymous == 0)
+                        <p class="name"> {{Auth::user()->name}} </p>
+                        @else
+                        <p class="name"> Anonymous </p>
+                        @endif
+                        <p class="text">{{$row->text}}</p>
+                    
+                        @php($already_voted = 'false')
+                        @foreach($vote as $v)
+                        @if($v->user_id == Auth::user()->id && $v->question_id ==$row->id)
+                        <form method="POST" action="/delete_vote" class="votebtn">
+                            @csrf
+                            <input type="hidden" name="id" value="{{$row->id}}">
+                            <input type="hidden" name="vote_id" value="{{$v->id}}">
+                            <button type="submit" class="btn btn-primary">Unvote</button>
+                        </form>
+                        @php($already_voted = 'true')
+                        @endif
+                        @endforeach
+                        @if($already_voted == 'false')
+                        <form method="POST" action="/increase_vote">
+                            @csrf
+                            <input type="hidden" name="id" value="{{$row->id}}">
+                            <button type="submit" class="btn btn-secondary">Vote</button>
+                        </form>
+                        @endif
+                    </div>
                 </div>
                 @endif
                 @endforeach

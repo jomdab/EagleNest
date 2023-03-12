@@ -4,7 +4,9 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-NWswiZMYlxyx/p5ue5sg8O67W1BucM5RbRjKLvUGYft2rCq0eULkxxZpAMvE0fTFWV7qsdT+T83VzvD9nSmtfw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-NWswiZMYlxyx/p5ue5sg8O67W1BucM5RbRjKLvUGYft2rCq0eULkxxZpAMvE0fTFWV7qsdT+T83VzvD9nSmtfw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="{{asset('js/scrolldown.js')}}"></script>
     <script src="{{asset('js/unvote.js')}}"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
@@ -106,9 +108,8 @@
         border-radius: 10px;
         border-bottom-left-radius: 0px;
         padding: 10px;
-        min-width: 186px;
-        max-width: 300px;
-        max-height: 170px;
+        width: 250px;
+        height: 190px;
         margin: 20px;
     }
 
@@ -146,10 +147,10 @@
     }
 
     .text {
-        height: 50px;
+        height: 70px;
         margin-top: 10px;
         margin-left: 10px;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
         word-wrap: break-word;
         white-space: pre-wrap;
         overflow-y: scroll;
@@ -274,31 +275,38 @@
     .fa-paper-plane {
         color: #ad9b9b;
     }
+
     @media screen and (max-width: 600px) {
-        .rectangle{
-            width:100vw;
+        .rectangle {
+            width: 100vw;
         }
+
         .sidebar {
             display: none;
         }
-        .question{
+
+        .question {
             width: 100vw;
         }
-        .bubble{
-            min-width:90vw;
-            max-height:180px;
-            margin-bottom:10px;
+
+        .bubble {
+            min-width: 90vw;
+            max-height: 180px;
+            margin-bottom: 10px;
         }
-        .bubble-content p{
-            margin-top:0px; 
-            margin-bottom:10px;
+
+        .bubble-content p {
+            margin-top: 0px;
+            margin-bottom: 10px;
         }
-        .bubble-content .votebtn{
-            margin-top:0px;
-            margin-bottom:0px;
+
+        .bubble-content .votebtn {
+            margin-top: 0px;
+            margin-bottom: 0px;
         }
-        .fa-crown{
-            margin-bottom:10px;
+
+        .fa-crown {
+            margin-bottom: 10px;
         }
     }
     </style>
@@ -344,13 +352,16 @@
                         <div style="display:flex;align-items:center;">
                             <p class="vote">{{ $row->vote }} VOTE</p>
                             @if($loop->iteration ==1)
-                            <i class="fa fa-crown" style="margin-left:10px;font-size:20px;color:#FFB743;text-shadow: 0 0 2px #000;"></i>
+                            <i class="fa fa-crown"
+                                style="margin-left:10px;font-size:20px;color:#FFB743;text-shadow: 0 0 2px #000;"></i>
                             @endif
                             @if($loop->iteration ==2)
-                            <i class="fa fa-crown" style="margin-left:10px;font-size:20px;color:#C0C0C0;text-shadow: 0 0 3px #000;"></i>
+                            <i class="fa fa-crown"
+                                style="margin-left:10px;font-size:20px;color:#C0C0C0;text-shadow: 0 0 3px #000;"></i>
                             @endif
                             @if($loop->iteration ==3)
-                            <i class="fa fa-crown" style="margin-left:10px;font-size:20px;color:#B87333;text-shadow: 0 0 3px #000;"></i>
+                            <i class="fa fa-crown"
+                                style="margin-left:10px;font-size:20px;color:#B87333;text-shadow: 0 0 3px #000;"></i>
                             @endif
                         </div>
                         @if($row->anonymous == 0)
@@ -359,7 +370,7 @@
                         <p class="name"> Anonymous </p>
                         @endif
                         <p class="text">{{$row->text}}</p>
-                    
+
                         @php($already_voted = 'false')
                         @foreach($vote as $v)
                         @if($v->user_id == Auth::user()->id && $v->question_id ==$row->id)

@@ -54,11 +54,13 @@ Route::middleware([
         }
         if($sort == 'vote'){
             $event = DB::table('events')
+                    ->orderBy('is_starred','desc')
                     ->orderBy('vote', 'desc')
                     ->get();
         }
         else{
             $event = DB::table('events')
+                    ->orderBy('is_starred','desc')
                     ->orderBy('created_at', 'desc')
                     ->get();
         }

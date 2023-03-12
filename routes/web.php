@@ -49,6 +49,9 @@ Route::middleware([
 ])->group(function () {
     Route::get('/room/{roomId}', function ($roomId,Request $request) {
         $sort = $request->sort;
+        $users = DB::table('users')
+         ->where('room', $roomId)
+         ->get();
         if($sort == null){
             $sort = 'vote';
         }
@@ -65,7 +68,7 @@ Route::middleware([
                     ->get();
         }
         $vote = Vote::all();
-        return view('user_room',compact('roomId','vote','sort'));
+        return view('user_room',compact('roomId','vote','sort','users','event'));
     })->name('room');
 });
 
@@ -95,6 +98,9 @@ Route::middleware([
 ])->group(function () {
     Route::get('/{roomId}/admin', function ($roomId,Request $request) {
         $qrCode = QrCode::size(100)->generate('http://localhost:8000/room/'.$roomId);
+        $users = DB::table('users')
+         ->where('room', $roomId)
+         ->get();
         if($request->sort == 'vote'){
             $event = DB::table('events')
                     ->orderBy('is_starred','desc')
@@ -108,7 +114,7 @@ Route::middleware([
                     ->get();
         }
         $sort=$request->sort;
-        return view('admin_room',compact('roomId','event','sort','qrCode'));
+        return view('admin_room',compact('roomId','event','sort','qrCode','users'));
     });
 });
 

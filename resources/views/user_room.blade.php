@@ -276,6 +276,52 @@
         color: #ad9b9b;
     }
 
+    .userlist {
+        margin-top: 30px;
+        width: auto;
+        background-color: white;
+        height: 216px;
+    }
+
+    .userlist .list-bar {
+        border: 1px solid #e2e8f0;
+        border-radius: 0.5rem;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+        height: 30px;
+        text-align: left;
+        display: flex;
+        align-items: center;
+    }
+
+    .list {
+        height: 182px;
+        display: flex;
+        flex-direction:column;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        overflow-y: scroll;
+    }
+
+    .user {
+        height: 36.4px;
+        margin-top: 10px;
+        margin-left: 30px;
+        align-items: left;
+        display: flex;
+    }
+
+    /* WebKit browsers */
+    .list::-webkit-scrollbar {
+        width: 0;
+        /* hide scrollbar width */
+    }
+
+    .fa-user {
+        margin-top: 3px;
+        margin-right: 5px;
+    }
+
     @media screen and (max-width: 600px) {
         .rectangle {
             width: 100vw;
@@ -348,6 +394,19 @@
                 <a href="{{ url('/dashboard') }}" style="text-decoration:none; color:inherit;">
                     <span>LEAVE ROOM</span>
                 </a>
+            </div>
+            <div class="userlist">
+                <div class="list-bar">
+                    <h6>Audience List</h6>
+                </div>
+                <div class="list">
+                    @foreach ($users as $user)
+                    <div class="user">
+                        <i class="fa fa-user"></i>
+                        <li>{{ $user->name }}</li>
+                    </div>
+                    @endforeach
+                </div>
             </div>
         </div>
         <!-- submit question bar -->

@@ -51,18 +51,8 @@ Route::middleware([
         if($sort == null){
             $sort = 'vote';
         }
-        if($sort == 'vote'){
-            $event = DB::table('events')
-                    ->orderBy('vote', 'desc')
-                    ->get();
-        }
-        else{
-            $event = DB::table('events')
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-        }
         $vote = Vote::all();
-        return view('user_room',compact('roomId','event','vote','sort'));
+        return view('user_room',compact('roomId','vote','sort'));
     })->name('room');
 });
 
@@ -112,7 +102,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::post('/increase_vote', [VoteController::class,'increase_vote'] );
+    Route::get('/increase_vote', [VoteController::class,'increase_vote'] )->name('increase_vote');
 });
 
 
@@ -121,7 +111,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::post('/delete_vote', [VoteController::class,'delete_vote'] );
+    Route::get('/delete_vote', [VoteController::class,'delete_vote'] )->name('delete_vote');
 });
 
 Route::middleware([

@@ -102,9 +102,8 @@
         border-radius: 10px;
         border-bottom-left-radius: 0px;
         padding: 10px;
-        min-width: 186px;
-        max-width: 300px;
-        max-height: 170px;
+        width: 250px;
+        height: 190px;
         margin: 20px;
     }
 
@@ -142,10 +141,10 @@
     }
 
     .text {
-        height: 50px;
+        height: 70px;
         margin-top: 10px;
         margin-left: 10px;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
         word-wrap: break-word;
         white-space: pre-wrap;
         overflow-y: scroll;

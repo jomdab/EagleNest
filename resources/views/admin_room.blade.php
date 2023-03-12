@@ -173,6 +173,16 @@
         display: none;
         /* Hide the button by default */
     }
+
+    .fa-crown {
+        margin-bottom: 0px;
+    }
+    .fa-star{
+        text-shadow: 0 0 5px #000;
+        font-size: 30px;
+        margin-top: -20px;
+        margin-right:0px;
+    }
     </style>
 </head>
 
@@ -216,7 +226,35 @@
 
                 <div class="bubble">
                     <!-- <h5 class="card-title">title</h5> -->
-                    <p class="vote">{{ $row->vote }} VOTE</p>
+                    <div style="display:flex;align-items:center;">
+                        <p class="vote">{{ $row->vote }} VOTE</p>
+                        @if($loop->iteration ==1)
+                        <i class="fa fa-crown"
+                            style="margin-left:10px;font-size:20px;color:#FFB743;text-shadow: 0 0 2px #000;"></i>
+                        @endif
+                        @if($loop->iteration ==2)
+                        <i class="fa fa-crown"
+                            style="margin-left:10px;font-size:20px;color:#C0C0C0;text-shadow: 0 0 3px #000;"></i>
+                        @endif
+                        @if($loop->iteration ==3)
+                        <i class="fa fa-crown"
+                            style="margin-left:10px;font-size:20px;color:#B87333;text-shadow: 0 0 3px #000;"></i>
+                        @endif
+                        <form method="POST" action="/star">
+                            @csrf
+                            <input type="hidden" name="is_starred" value="true">
+                            <input type="hidden" name="id" value="{{$row->id}}">
+                            @if($row->is_starred == 1)
+                            <button type="submit" style="position: absolute;margin-top:-10px;right: 10px;height:50px;width:50px;background-color:inherit;border:none;">
+                                <i class="fas fa-star" style=" color:#FFB743;"></i>
+                            </button>
+                            @else
+                            <button type="submit" style="position: absolute;margin-top:-10px;right: 10px;height:50px;width:50px;background-color:inherit;border:none;">
+                                <i class="fas fa-star" style=" color:#fff;"></i>
+                            </button>
+                            @endif
+                        </form>
+                    </div>
                     @if($row->anonymous == 0)
                     <p class="name"> {{Auth::user()->name}} </p>
                     @else

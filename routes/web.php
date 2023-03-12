@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\Join_RoomController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\StarController;
 use App\Models\Event;
 use App\Http\Controllers\VoteController;
 use App\Models\Vote;
@@ -94,11 +95,13 @@ Route::middleware([
         $qrCode = QrCode::size(100)->generate('http://localhost:8000/room/'.$roomId);
         if($request->sort == 'vote'){
             $event = DB::table('events')
+                    ->orderBy('is_starred','desc')
                     ->orderBy('vote', 'desc')
                     ->get();
         }
         else{
             $event = DB::table('events')
+                    ->orderBy('is_starred','desc')
                     ->orderBy('created_at', 'desc')
                     ->get();
         }
@@ -115,13 +118,12 @@ Route::middleware([
     Route::post('/increase_vote', [VoteController::class,'increase_vote'] );
 });
 
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::post('/delete_vote', [VoteController::class,'delete_vote'] );
+    Route::post('/star', [StarController::class,'toggleStar'] );
 });
 
 Route::middleware([

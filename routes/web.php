@@ -52,18 +52,6 @@ Route::middleware([
         if($sort == null){
             $sort = 'vote';
         }
-        if($sort == 'vote'){
-            $event = DB::table('events')
-                    ->orderBy('is_starred','desc')
-                    ->orderBy('vote', 'desc')
-                    ->get();
-        }
-        else{
-            $event = DB::table('events')
-                    ->orderBy('is_starred','desc')
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-        }
         $vote = Vote::all();
         return view('user_room',compact('roomId','vote','sort'));
     })->name('room');
@@ -126,6 +114,14 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::post('/star', [StarController::class,'toggleStar'] );
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/delete_vote', [VoteController::class,'delete_vote'] )->name('delete_vote');
 });
 
 Route::middleware([

@@ -1,7 +1,6 @@
-
 <div class="content">
             <div class="question">
-                @foreach($this->event as $row)
+                @foreach($event as $row)
                 @if($row->room_id == $roomId)
                 <div class="bubble">
                     <div class="bubble-content">
@@ -19,6 +18,12 @@
                             <i class="fa fa-crown"
                                 style="margin-left:10px;font-size:20px;color:#B87333;text-shadow: 0 0 3px #000;"></i>
                             @endif
+                            @if($row->is_starred == 1)
+                            <button type="submit"
+                                style="position: absolute;margin-top:-10px;right: 10px;height:50px;width:50px;background-color:inherit;border:none;">
+                                <i class="fas fa-star" style=" color:#FFB743;font-size:30px;margin-top:20px;text-shadow: 0 0 5px #000;"></i>
+                            </button>
+                            @endif
                         </div>
                         @if($row->anonymous == 0)
                         <p class="name"> {{Auth::user()->name}} </p>
@@ -31,7 +36,7 @@
                         @foreach($vote as $v)
                         @if($v->user_id == Auth::user()->id && $v->question_id ==$row->id)
                         <!-- <form method="POST" action="/delete_vote" class="votebtn"> -->
-                            @csrf
+                        @csrf
                             <!-- <input type="hidden" name="id" value="{{$row->id}}">
                             <input type="hidden" name="vote_id" value="{{$v->id}}"> -->
                             <button type="submit" class="btn btn-primary" onclick="window.location = '{{ route('delete_vote', ['id'=>$row->id , 'vote_id' => $v->id ]) }}'">Unvote</button>
@@ -41,7 +46,7 @@
                         @endforeach
                         @if($already_voted == 'false')
                         <!-- <form method="POST" action="/increase_vote"> -->
-                            @csrf
+                        @csrf
                             <!-- <input type="hidden" name="id" value="{{$row->id}}"> -->
                             <button type="submit" class="btn btn-secondary" onclick="window.location = '{{ route('increase_vote', ['id'=>$row->id]) }}'">Vote</button>
                         <!-- </form> -->
@@ -74,7 +79,7 @@
                     <div class="askbox">
                         <div class="desc">Ask some questions.</div>
                         <div style="position: relative;display:flex; width: auto; height:60px; background-color:white">
-                            <input wire:model='searchTerm' type="text" class="form-control" name="question"
+                            <input wire:model="searchTerm" type="text" class="form-control" name="question"
                                 placeholder="Ask your question here..." style="width: 95%; height:60px; border:none">
                             <button type="submit"
                                 style="position: absolute;right: 10px;height:60px;width:50px;background-color:white;border:none;">

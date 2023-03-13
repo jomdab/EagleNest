@@ -19,11 +19,13 @@ class Question extends Component
         sleep(0.5);
         if($this->sort == 'vote'){
             $this->event = Event::where('text', 'LIKE', '%'.$this->searchTerm.'%')
+                    ->orderBy('is_starred','desc')
                     ->orderBy('vote', 'desc')
                     ->get();
         }
         else{
             $this->event = Event::where('text', 'LIKE', '%'.$this->searchTerm.'%')
+                    ->orderBy('is_starred','desc')
                     ->orderBy('created_at', 'desc')
                     ->get();
         }

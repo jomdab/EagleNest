@@ -118,20 +118,11 @@ Route::middleware([
         $users = DB::table('users')
          ->where('room', $roomId)
          ->get();
-        if($request->sort == 'vote'){
-            $event = DB::table('events')
-                    ->orderBy('is_starred','desc')
-                    ->orderBy('vote', 'desc')
-                    ->get();
-        }
-        else{
-            $event = DB::table('events')
-                    ->orderBy('is_starred','desc')
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-        }
         $sort=$request->sort;
-        return view('admin_room',compact('roomId','event','sort','qrCode','users'));
+        if($sort == null){
+            $sort = 'vote';
+        }
+        return view('admin_room',compact('roomId','sort','qrCode','users'));
     });
 });
 
@@ -172,5 +163,5 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::post('/delete_question', [EventController::class,'delete'] );
+    Route::get('/delete_question', [EventController::class,'delete'] )->name('delete_question');
 });

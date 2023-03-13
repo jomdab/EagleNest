@@ -7,6 +7,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\StarController;
 use App\Models\Event;
 use App\Http\Controllers\VoteController;
+use App\Http\Controllers\RoomController;
 use App\Models\Vote;
 use Illuminate\Http\Request; 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -41,6 +42,20 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/manage', function () {
+        $rooms = DB::table('rooms')
+            ->where('user_id',Auth::user()->id)
+            ->get();
+        return view('manage',compact('rooms'));
+    })->name('manage');
+});
+
 
 Route::middleware([
     'auth:sanctum',
@@ -118,6 +133,14 @@ Route::middleware([
         $sort=$request->sort;
         return view('admin_room',compact('roomId','event','sort','qrCode','users'));
     });
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::post('/rooms', [RoomController::class,'store'] );
 });
 
 Route::middleware([

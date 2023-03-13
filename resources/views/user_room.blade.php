@@ -297,7 +297,7 @@
     .list {
         height: 182px;
         display: flex;
-        flex-direction:column;
+        flex-direction: column;
         word-wrap: break-word;
         white-space: pre-wrap;
         overflow-y: scroll;
@@ -391,9 +391,12 @@
                 <h4>{{ __('Your room id is '.$roomId) }}</h4>
             </div>
             <div class="leavebtn">
-                <a href="{{ url('/dashboard') }}" style="text-decoration:none; color:inherit;">
-                    <span>LEAVE ROOM</span>
-                </a>
+                <form action="{{ url('/leave-room') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-link" style="text-decoration:none; color:inherit;">
+                        <span>LEAVE ROOM</span>
+                    </button>
+                </form>
             </div>
             <div class="userlist">
                 <div class="list-bar">

@@ -70,6 +70,20 @@ Route::middleware([
     Route::get('/join-room', [Join_RoomController::class,'joinRoom']);
 });
 
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::middleware(['auth'])->post('/leave-room', function(){
+        auth()->user()->update([
+            'room'=>'None'
+        ]);
+        return redirect('/dashboard');
+    });
+});
+
+
 
 Route::middleware([
     'auth:sanctum',

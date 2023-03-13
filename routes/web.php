@@ -56,7 +56,7 @@ Route::middleware([
             $sort = 'vote';
         }
         $vote = Vote::all();
-        return view('user_room',compact('roomId','vote','sort','users','event'));
+        return view('user_room',compact('roomId','vote','sort','users'));
     })->name('room');
 });
 

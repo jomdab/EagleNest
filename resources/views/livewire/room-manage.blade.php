@@ -46,4 +46,5 @@
             @endforeach
         </div>
     </div>
+    <a style="margin-top:10px;float:left;width:100%; color:white; margin-left:-70px;margin-bottom:-30px;" href="/dashboard"> < Back</a>
 </div>

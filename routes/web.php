@@ -50,10 +50,7 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/manage', function () {
-        $rooms = DB::table('rooms')
-            ->where('user_id',Auth::user()->id)
-            ->get();
-        return view('manage',compact('rooms'));
+        return view('manage');
     })->name('manage');
 });
 

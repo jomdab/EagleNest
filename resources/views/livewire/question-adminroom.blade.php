@@ -7,7 +7,7 @@
             <div class="bar-anonymous">
                 <div>
                     <label class="toggle">
-                        <input wire:model="show_hidden" type="checkbox" name="anonymous" value="1" checked>Show hidden questions
+                        <input wire:model="show_hidden" type="checkbox" name="anonymous" value="1">Show hidden questions
                         <span class="slider"></span>
                     </label>
                 </div>

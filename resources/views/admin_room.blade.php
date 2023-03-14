@@ -189,7 +189,7 @@
         margin-top: 30px;
         width: auto;
         background-color: white;
-        height: 216px;
+        height: 170px;
     }
 
     .userlist .list-bar {
@@ -261,8 +261,8 @@
             </div>
             <div style="margin-bottom:20px;">{{ $qrCode }}</div>
             <div class="leavebtn">
-                <a href="{{ url('/dashboard') }}" style="text-decoration:none; color:inherit;">
-                    <span>LEAVE ROOM</span>
+                <a href="{{url('/end-event/'.$room->room_id)}}" style="text-decoration:none; color:inherit;">
+                    <span>End Event</span>
                 </a>
             </div>
             <div class="userlist">

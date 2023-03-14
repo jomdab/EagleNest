@@ -29,6 +29,15 @@ class RoomController extends Controller
         return redirect()->back();
     }
 
+    public function start($id)
+    {
+        $room = Room::findOrFail($id);
+        $room->status = 'progress';
+        $room->save();
+
+        return redirect()->route('room.show', $id);
+    }
+
     public function show($room_id)
     {
         $room = Room::where('room_id', $room_id)->firstOrFail();

@@ -284,7 +284,7 @@
             <div class="profile">
                 <i class="fa fa-user-circle"></i>
             </div>
-            <button class="create" onclick="location.href='/{{ Auth::user()->id }}/admin'">
+            <button class="create" onclick="location.href='/manage'">
                 <h3>
                     {{ __('CREATE ROOM') }}
                 </h3>
@@ -305,4 +305,5 @@
             </form>
         </div>
     </div>
+    
 </body>

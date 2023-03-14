@@ -9,6 +9,7 @@ use App\Models\Event;
 use App\Http\Controllers\VoteController;
 use App\Http\Controllers\RoomController;
 use App\Models\Vote;
+use App\Models\Room;
 use Illuminate\Http\Request; 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -114,6 +115,10 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/{roomId}/admin', function ($roomId,Request $request) {
+        $id = str($roomId);
+        $room = Room::where('room_id', $id)->first();
+        $room->status = 'progress';
+        $room->save(); // save the updated status to the database
         $qrCode = QrCode::size(100)->generate('http://localhost:8000/room/'.$roomId);
         $users = DB::table('users')
          ->where('room', $roomId)
@@ -122,7 +127,20 @@ Route::middleware([
         if($sort == null){
             $sort = 'vote';
         }
-        return view('admin_room',compact('roomId','sort','qrCode','users'));
+        return view('admin_room',compact('roomId','sort','qrCode','users','room'));
+    });
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/end-event/{roomId}', function ($roomId) {
+        $room = Room::where('room_id', $roomId)->first();
+        $room->status = 'finished';
+        $room->save();
+        return redirect('/dashboard');
     });
 });
 

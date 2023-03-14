@@ -265,6 +265,42 @@
         text-decoration: none;
         cursor: pointer;
     }
+
+    .list {
+        width: 100%;
+        top: 70px;
+        position: absolute;
+    }
+
+    .list-element {
+        background-color: white;
+        margin-left: 20px;
+        width: 90%;
+        height: 80px;
+        border-bottom: 1px solid grey;
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .element-name {
+        margin-left: 50px;
+    }
+
+    .element-status {
+        width:100px;
+        height:30px;
+        background-color:lightgreen;
+        margin-right: 60px;
+        border-radius:8px;
+        border: 1px solid black;
+        text-align:center;
+    }
+    .element-status:hover{
+        background-color:green;
+    }
     </style>
 </head>
 
@@ -347,7 +383,16 @@
                 </div>
                 <div class="list">
                     @foreach($rooms as $room)
-                    <li>{{$room->name}}</li>
+                    <div class="list-element">
+                        <h4 class="element-name">{{$room->name}}</h4>
+                        @if($room->status == 'wait')
+                        <a class="element-status btn-primary" href="/{{$room->room_id}}/admin">Start</a>
+                        @elseif($room->status == 'progress')
+                        <a class="element-status btn-primary "href="/{{$room->room_id}}/admin">Resume</a>
+                        @elseif($room->status == 'finished')
+                        <a class="element-status btn-primary">See Result</a>
+                        @endif
+                    </div>
                     @endforeach
                 </div>
             </div>

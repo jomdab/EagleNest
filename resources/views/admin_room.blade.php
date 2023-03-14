@@ -41,7 +41,21 @@
     }
 
     .leavebtn {
+        margin-bottom:10px;
         background-color: #ad9b9b;
+        border-radius: 9px;
+        border: none;
+        color: black;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+        width: 150px;
+        height: 30px;
+    }
+
+    .endbtn {
+        background-color: #f87878;
         border-radius: 9px;
         border: none;
         color: black;
@@ -189,7 +203,7 @@
         margin-top: 30px;
         width: auto;
         background-color: white;
-        height: 170px;
+        height: 130px;
     }
 
     .userlist .list-bar {
@@ -260,7 +274,13 @@
                 <h4>{{ __('Your room id is '.$roomId) }}</h4>
             </div>
             <div style="margin-bottom:20px;">{{ $qrCode }}</div>
-            <div class="leavebtn">
+            <form action="{{ url('/leave-room') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="leavebtn" style="text-decoration:none; color:inherit;">
+                        <span>LEAVE ROOM</span>
+                    </button>
+                </form>
+            <div class="endbtn">
                 <a href="{{url('/end-event/'.$room->room_id)}}" style="text-decoration:none; color:inherit;">
                     <span>End Event</span>
                 </a>

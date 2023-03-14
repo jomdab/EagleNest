@@ -166,6 +166,13 @@
         align-items: center;
         justify-content: center;
         position: relative;
+        overflow-y: scroll;
+        overflow-x:hidden;
+    }
+
+    .eventlist::-webkit-scrollbar {
+        width: 0;
+        /* hide scrollbar width */
     }
 
     .bar {

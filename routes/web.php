@@ -54,6 +54,22 @@ Route::middleware([
     })->name('manage');
 });
 
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/result/{roomId}', function ($roomId,Request $request) {
+        $event = DB::table('events')
+            ->leftJoin('users','events.user_id','=','users.id')
+            ->where('room_id',$roomId)
+            ->orderBy('is_starred','desc')
+            ->orderBy('vote','desc')
+            ->get();
+        return view('result',compact('event','roomId'));
+    })->name('result');
+});
+
 
 Route::middleware([
     'auth:sanctum',

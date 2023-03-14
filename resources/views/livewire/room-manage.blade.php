@@ -40,7 +40,7 @@
                 @elseif($room->status == 'progress')
                 <a class="element-status btn-primary "href="/{{$room->room_id}}/admin">Resume</a>
                 @elseif($room->status == 'finished')
-                <a class="element-status btn-primary">See Result</a>
+                <a class="element-status btn-primary" href="/result/{{$room->room_id}}">See Result</a>
                 @endif
             </div>
             @endforeach

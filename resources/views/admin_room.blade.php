@@ -29,7 +29,7 @@
 
     .rectangle {
         width: 1500px;
-        height: 650px;
+        height: 700px;
         background-color: #b6b6b6;
         position: absolute;
         top: 50%;
@@ -154,7 +154,7 @@
         background-color: white;
         width: 1200px;
         height: 550px;
-        margin-top: 25px;
+        /* margin-top: 2px; */
         margin-left: 50px;
         margin-right: 50px;
         display: flex;
@@ -218,6 +218,10 @@
         margin-left: 30px;
         align-items: left;
         display: flex;
+    }/* WebKit browsers */
+    .question::-webkit-scrollbar {
+        width: 0;
+        /* hide scrollbar width */
     }
 
     /* WebKit browsers */
@@ -230,6 +234,80 @@
         margin-top: 3px;
         margin-right: 5px;
     }
+
+    .bar {
+        display: flex;
+        flex-direction: row;
+        height: 40px;
+        background-color: #ad9b9b;
+    }
+
+    .fa-user-circle {
+        margin-top: 5px;
+        margin-left: 30px;
+        color: white;
+        font-size: 30px;
+    }
+
+    .bar-name {
+        margin-left: 10px;
+        display: flex;
+        font-weight: bold;
+        height: auto;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .bar-anonymous {
+        position: absolute;
+        right: 50px;
+    }
+
+    .toggle {
+        display: flex;
+        height: 40px;
+        justify-content: center;
+        font-weight: bold;
+        align-items: center;
+    }
+
+    .toggle input {
+        display: none;
+    }
+
+    /* Style the slider element */
+    .toggle .slider {
+        margin-left: 10px;
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 20px;
+        border-radius: 20px;
+        background-color: gray;
+    }
+
+    /* Style the knob inside the slider element */
+    .toggle .slider::before {
+        position: absolute;
+        content: "";
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        top: 1px;
+        left: 1px;
+        background-color: white;
+        transition: all 0.3s ease;
+    }
+
+    .toggle input:checked+.slider {
+        background-color: #87f255;
+    }
+
+    .toggle input:checked+.slider::before {
+        transform: translateX(20px);
+    }
+
+
     </style>
     @livewireStyles
 </head>
@@ -279,7 +357,7 @@
                 </div>
             </div>
         </div>
-        @livewire('question-adminroom', ['roomId' => $roomId ,'sort' => $sort])
+        @livewire('question-adminroom', ['roomId' => $roomId ,'sort' => $sort ,'show_hidden' => $show_hidden])
     </div>
     @livewireScripts
 </body>

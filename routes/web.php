@@ -12,7 +12,7 @@ use App\Models\Vote;
 use App\Models\Room;
 use Illuminate\Http\Request; 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-
+use Illuminate\Support\Facades\Input;
 
 
 /*
@@ -124,8 +124,9 @@ Route::middleware([
         if($sort == null){
             $sort = 'vote';
         }
-        return view('admin_room',compact('roomId','sort','qrCode','users','room'));
-    });
+        $show_hidden = old('show_hidden');
+        return view('admin_room',compact('roomId','sort','qrCode','users','room','show_hidden'));
+    })->name('admin_room');
 });
 
 Route::middleware([
@@ -179,4 +180,12 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/delete_question', [EventController::class,'delete'] )->name('delete_question');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/restore_question', [EventController::class,'restore'] )->name('restore_question');
 });

@@ -54,10 +54,13 @@
         text-align: center;
         text-decoration: none;
         display: inline-block;
+        
         font-size: 20px;
         width: 150px;
         height: 30px;
+        margin-top:15rem;
     }
+    
   
     .sidebar {
         background: white;
@@ -327,6 +330,13 @@
        
         justify-content:center;
     }
+    .left-display{
+        display:flex;
+        flex-direction:column;
+        justify-content:space-between;
+        background-color:red;
+        margin-bottom:2rem;
+    }
  
     
     </style>
@@ -338,6 +348,8 @@
             <div class="profile">
                 <img src="{{asset('/logo/logo_long.png')}}">
             </div>
+            
+            
             <div>
                 @if($sort == "vote")
                 <form action="/room/{{$roomId}}">
@@ -356,11 +368,14 @@
                 @endif
                 <h4 class = "idBox">{{ __('Room ID:  '.$roomId) }}</h4>
             </div>
+           
             <div class="leavebtn">
                 <a href="{{ url('/dashboard') }}" style="text-decoration:none; color:inherit;">
                     <span>LEAVE ROOM</span>
                 </a>
             </div>
+
+            
         </div>
         <!-- submit question bar -->
         <div class="content">

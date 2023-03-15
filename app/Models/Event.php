@@ -15,6 +15,7 @@ class Event extends Model
         'room_id',
         'user_id',
         'text',
+        'is_starred',
         'vote',
         'anonymous'
     ];

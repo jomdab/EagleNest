@@ -37,9 +37,16 @@ class EventController extends Controller
 
     public function delete(Request $request){
         
-        Event::find($request->id)->forceDelete();
+        Event::find($request->id)->delete();
 
         return redirect()->back();
+        
+    }
+
+    public function restore(Request $request){
+        
+        $restore = Event::withTrashed()->find($request->id)->restore();
+        return back()->withInput();
         
     }
 

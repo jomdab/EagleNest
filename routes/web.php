@@ -4,12 +4,15 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\Join_RoomController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\StarController;
 use App\Models\Event;
 use App\Http\Controllers\VoteController;
+use App\Http\Controllers\RoomController;
 use App\Models\Vote;
+use App\Models\Room;
 use Illuminate\Http\Request; 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-
+use Illuminate\Support\Facades\Input;
 
 
 /*
@@ -46,23 +49,43 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
+    Route::get('/manage', function () {
+        return view('manage');
+    })->name('manage');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/result/{roomId}', function ($roomId,Request $request) {
+        $event = DB::table('events')
+            ->leftJoin('users','events.user_id','=','users.id')
+            ->where('room_id',$roomId)
+            ->orderBy('is_starred','desc')
+            ->orderBy('vote','desc')
+            ->get();
+        return view('result',compact('event','roomId'));
+    })->name('result');
+});
+
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
     Route::get('/room/{roomId}', function ($roomId,Request $request) {
         $sort = $request->sort;
+        $users = DB::table('users')
+         ->where('room', $roomId)
+         ->get();
         if($sort == null){
             $sort = 'vote';
         }
-        if($sort == 'vote'){
-            $event = DB::table('events')
-                    ->orderBy('vote', 'desc')
-                    ->get();
-        }
-        else{
-            $event = DB::table('events')
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-        }
         $vote = Vote::all();
-        return view('user_room',compact('roomId','event','vote','sort'));
+        return view('user_room',compact('roomId','vote','sort','users'));
     })->name('room');
 });
 
@@ -75,6 +98,20 @@ Route::middleware([
 ])->group(function () {
     Route::get('/join-room', [Join_RoomController::class,'joinRoom']);
 });
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::middleware(['auth'])->post('/leave-room', function(){
+        auth()->user()->update([
+            'room'=>'None'
+        ]);
+        return redirect('/dashboard');
+    });
+});
+
 
 
 Route::middleware([
@@ -91,19 +128,33 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/{roomId}/admin', function ($roomId,Request $request) {
+        $id = str($roomId);
+        $room = Room::where('room_id', $id)->first();
+        $room->status = 'progress';
+        $room->save(); // save the updated status to the database
         $qrCode = QrCode::size(100)->generate('http://localhost:8000/room/'.$roomId);
-        if($request->sort == 'vote'){
-            $event = DB::table('events')
-                    ->orderBy('vote', 'desc')
-                    ->get();
-        }
-        else{
-            $event = DB::table('events')
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-        }
+        $users = DB::table('users')
+         ->where('room', $roomId)
+         ->get();
         $sort=$request->sort;
-        return view('admin_room',compact('roomId','event','sort','qrCode'));
+        if($sort == null){
+            $sort = 'vote';
+        }
+        $show_hidden = old('show_hidden');
+        return view('admin_room',compact('roomId','sort','qrCode','users','room','show_hidden'));
+    })->name('admin_room');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/end-event/{roomId}', function ($roomId) {
+        $room = Room::where('room_id', $roomId)->first();
+        $room->status = 'finished';
+        $room->save();
+        return redirect('/dashboard');
     });
 });
 
@@ -112,16 +163,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::post('/increase_vote', [VoteController::class,'increase_vote'] );
-});
-
-
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::post('/delete_vote', [VoteController::class,'delete_vote'] );
+    Route::post('/rooms', [RoomController::class,'store'] );
 });
 
 Route::middleware([
@@ -129,5 +171,37 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::post('/delete_question', [EventController::class,'delete'] );
+    Route::get('/increase_vote', [VoteController::class,'increase_vote'] )->name('increase_vote');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::post('/star', [StarController::class,'toggleStar'] );
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/delete_vote', [VoteController::class,'delete_vote'] )->name('delete_vote');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/delete_question', [EventController::class,'delete'] )->name('delete_question');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/restore_question', [EventController::class,'restore'] )->name('restore_question');
 });

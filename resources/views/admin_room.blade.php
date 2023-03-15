@@ -29,7 +29,7 @@
 
     .rectangle {
         width: 1500px;
-        height: 650px;
+        height: 700px;
         background-color: #b6b6b6;
         position: absolute;
         top: 50%;
@@ -41,7 +41,21 @@
     }
 
     .leavebtn {
+        margin-bottom:10px;
         background-color: #ad9b9b;
+        border-radius: 9px;
+        border: none;
+        color: black;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+        width: 150px;
+        height: 30px;
+    }
+
+    .endbtn {
+        background-color: #f87878;
         border-radius: 9px;
         border: none;
         color: black;
@@ -102,9 +116,8 @@
         border-radius: 10px;
         border-bottom-left-radius: 0px;
         padding: 10px;
-        min-width: 186px;
-        max-width: 300px;
-        max-height: 170px;
+        width: 250px;
+        height: 190px;
         margin: 20px;
     }
 
@@ -142,10 +155,10 @@
     }
 
     .text {
-        height: 50px;
+        height: 70px;
         margin-top: 10px;
         margin-left: 10px;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
         word-wrap: break-word;
         white-space: pre-wrap;
         overflow-y: scroll;
@@ -155,7 +168,7 @@
         background-color: white;
         width: 1200px;
         height: 550px;
-        margin-top: 50px;
+        /* margin-top: 2px; */
         margin-left: 50px;
         margin-right: 50px;
         display: flex;
@@ -174,7 +187,143 @@
         display: none;
         /* Hide the button by default */
     }
+
+    .fa-crown {
+        margin-bottom: 0px;
+    }
+
+    .fa-star {
+        text-shadow: 0 0 5px #000;
+        font-size: 30px;
+        margin-top: -20px;
+        margin-right: 0px;
+    }
+
+    .userlist {
+        margin-top: 30px;
+        width: auto;
+        background-color: white;
+        height: 130px;
+    }
+
+    .userlist .list-bar {
+        border: 1px solid #e2e8f0;
+        border-radius: 0.5rem;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+        height: 30px;
+        text-align: left;
+        display: flex;
+        align-items: center;
+    }
+
+    .list {
+        height: 182px;
+        display: flex;
+        flex-direction:column;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        overflow-y: scroll;
+    }
+
+    .user {
+        height: 36.4px;
+        margin-top: 10px;
+        margin-left: 30px;
+        align-items: left;
+        display: flex;
+    }/* WebKit browsers */
+    .question::-webkit-scrollbar {
+        width: 0;
+        /* hide scrollbar width */
+    }
+
+    /* WebKit browsers */
+    .list::-webkit-scrollbar {
+        width: 0;
+        /* hide scrollbar width */
+    }
+
+    .fa-user {
+        margin-top: 3px;
+        margin-right: 5px;
+    }
+
+    .bar {
+        display: flex;
+        flex-direction: row;
+        height: 40px;
+        background-color: #ad9b9b;
+    }
+
+    .fa-user-circle {
+        margin-top: 5px;
+        margin-left: 30px;
+        color: white;
+        font-size: 30px;
+    }
+
+    .bar-name {
+        margin-left: 10px;
+        display: flex;
+        font-weight: bold;
+        height: auto;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .bar-anonymous {
+        position: absolute;
+        right: 50px;
+    }
+
+    .toggle {
+        display: flex;
+        height: 40px;
+        justify-content: center;
+        font-weight: bold;
+        align-items: center;
+    }
+
+    .toggle input {
+        display: none;
+    }
+
+    /* Style the slider element */
+    .toggle .slider {
+        margin-left: 10px;
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 20px;
+        border-radius: 20px;
+        background-color: gray;
+    }
+
+    /* Style the knob inside the slider element */
+    .toggle .slider::before {
+        position: absolute;
+        content: "";
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        top: 1px;
+        left: 1px;
+        background-color: white;
+        transition: all 0.3s ease;
+    }
+
+    .toggle input:checked+.slider {
+        background-color: #87f255;
+    }
+
+    .toggle input:checked+.slider::before {
+        transform: translateX(20px);
+    }
+
+
     </style>
+    @livewireStyles
 </head>
 
 <body>
@@ -203,41 +352,33 @@
                 <h4>{{ __('Your room id is '.$roomId) }}</h4>
             </div>
             <div style="margin-bottom:20px;">{{ $qrCode }}</div>
-            <div class="leavebtn">
-                <a href="{{ url('/dashboard') }}" style="text-decoration:none; color:inherit;">
-                    <span>LEAVE ROOM</span>
+            <form action="{{ url('/leave-room') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="leavebtn" style="text-decoration:none; color:inherit;">
+                        <span>LEAVE ROOM</span>
+                    </button>
+                </form>
+            <div class="endbtn">
+                <a href="{{url('/end-event/'.$room->room_id)}}" style="text-decoration:none; color:inherit;">
+                    <span>End Event</span>
                 </a>
                 
             </div>
-        </div>
-
-        <div class="content">
-            <div class="question">
-                @foreach($event as $row)
-                @if($row->room_id == $roomId)
-
-                <div class="bubble">
-                    <!-- <h5 class="card-title">title</h5> -->
-                    <p class="vote">{{ $row->vote }} VOTE</p>
-                    @if($row->anonymous == 0)
-                    <p class="name"> {{Auth::user()->name}} </p>
-                    @else
-                    <p class="name"> Anonymous </p>
-                    @endif
-                    <p class="text">{{$row->text}}</p>
-                    @if(empty($voted))
-                    <form method="POST" action="/delete_question">
-                        @csrf
-                        <input type="hidden" name="voted" value="true">
-                        <input type="hidden" name="id" value="{{$row->id}}">
-                        <button type="submit" class="btn btn-danger">delete</button>
-                    </form>
-                    @endif
+            <div class="userlist">
+                <div class="list-bar">
+                    <h6>Audience List</h6>
                 </div>
-                @endif
-                @endforeach
-                <button id="scroll-down-button" class="btn btn-primary">Scroll Down</button>
+                <div class="list">
+                    @foreach ($users as $user)
+                    <div class="user">
+                        <i class="fa fa-user"></i>
+                        <li>{{ $user->name }}</li>
+                    </div>
+                    @endforeach
+                </div>
             </div>
         </div>
+        @livewire('question-adminroom', ['roomId' => $roomId ,'sort' => $sort ,'show_hidden' => $show_hidden])
     </div>
+    @livewireScripts
 </body>

@@ -63,17 +63,23 @@
             margin-left: auto;
             margin-right: auto;
             margin-bottom: auto;
+            
+            
         }
 
         .sidebar .profile h3{
             color: black;
             margin: 10px 0 5px;
             font-size: 20px;
+          
+            
         }
 
         .sidebar .profile p{
             color: black;
             font-size: 20px;
+           
+            
         }
         .sidebar ul li a{
             margin-left: 20px;
@@ -125,7 +131,7 @@
             border-top-right-radius: 8px;
             border-bottom-right-radius: 8px;
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             align-items:center;
             flex-direction:column;
         }
@@ -206,6 +212,7 @@
         .fa-user-circle{
             margin-bottom: 10px;
         }
+        
     </style>
 </head>
 <body>
@@ -219,7 +226,7 @@
 
                 <ul>
                     <li>
-                        <a href="{{ route('profile.show') }}">
+                        <a href="{{ route('profile.show') }}" >
                             <span class="icon"><i class="fa fa-user-circle"></i></span>
                             <span class="item">Profile</span>
                         </a>

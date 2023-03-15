@@ -58,7 +58,7 @@
         width: 150px;
         height: 30px;
     }
-
+  
     .sidebar {
         background: white;
         position: relative;
@@ -263,7 +263,9 @@
     .desc {
         margin-left: 20px;
         font-size: 15px;
+       
         color: white;
+        
     }
 
     .askbox {
@@ -309,6 +311,24 @@
             margin-bottom: 10px;
         }
     }
+    .form-control{
+        text-align:center;
+        font-size:1.5rem;
+        
+    }
+    .idBox{
+        border:none;
+        background-color: #ad9b9b;
+       border-radius:3px;
+       width: 150px;
+        height: 30px;
+        margin-left:auto;
+        margin-right:auto;
+       
+        justify-content:center;
+    }
+ 
+    
     </style>
 </head>
 
@@ -334,7 +354,7 @@
                     </select>
                 </form>
                 @endif
-                <h4>{{ __('Your room id is '.$roomId) }}</h4>
+                <h4 class = "idBox">{{ __('Room ID:  '.$roomId) }}</h4>
             </div>
             <div class="leavebtn">
                 <a href="{{ url('/dashboard') }}" style="text-decoration:none; color:inherit;">
@@ -416,7 +436,8 @@
                     <div class="form-group my-2">
                     </div>
                     <div class="askbox">
-                        <div class="desc">Ask some questions.</div>
+                        <p class="desc">Ask some questions.</p>
+                        
                         <div style="position: relative;display:flex; width: auto; height:60px; background-color:white">
                             <input type="text" class="form-control" name="question"
                                 placeholder="Ask your question here..." style="width: 95%; height:60px; border:none">

@@ -207,6 +207,7 @@
                 <a href="{{ url('/dashboard') }}" style="text-decoration:none; color:inherit;">
                     <span>LEAVE ROOM</span>
                 </a>
+                
             </div>
         </div>
 
